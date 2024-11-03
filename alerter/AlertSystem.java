@@ -2,9 +2,9 @@
 package alerter;
 public class AlertSystem {
     int alertFailureCount;
-    NetworkAlertFunc networkAlertFunc;
+    INetworkAlertFunc networkAlertFunc;
 
-    public AlertSystem(int alertFailureCount, NetworkAlertFunc networkAlertFunc) {
+    public AlertSystem(int alertFailureCount, INetworkAlertFunc networkAlertFunc) {
         this.alertFailureCount = alertFailureCount;
         this.networkAlertFunc = networkAlertFunc;
     }
