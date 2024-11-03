@@ -1,3 +1,5 @@
+
+package alerter;
 public class AlertSystem {
     int alertFailureCount;
     NetworkAlertFunc networkAlertFunc;
