@@ -27,5 +27,5 @@ jobs:
 
     - name: alerter fail
       run: |
-        cd AlertSystem
+        cd alerter
         bash ../.github/workflows/expectfail.sh java -ea AlertSystem.java
