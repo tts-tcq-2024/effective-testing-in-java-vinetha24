@@ -1,10 +1,8 @@
-
-package alerter;
 public class AlertSystem {
     int alertFailureCount;
-    INetworkAlertFunc networkAlertFunc;
+    NetworkAlertFunc networkAlertFunc;
 
-    public AlertSystem(int alertFailureCount, INetworkAlertFunc networkAlertFunc) {
+    public AlertSystem(int alertFailureCount, NetworkAlertFunc networkAlertFunc) {
         this.alertFailureCount = alertFailureCount;
         this.networkAlertFunc = networkAlertFunc;
     }
@@ -29,5 +27,31 @@ public class AlertSystem {
         testSystem.alertInCelcius(500.0f);
         testSystem.alertInCelcius(178.0f);
         assert(testSystem.alertFailureCount==3);
+    }
+}
+
+interface NetworkAlertFunc {
+    int alert(float celcius);
+}
+
+class NetworkAlertStub implements NetworkAlertFunc {
+    public int alert(float celcius) {
+        System.out.println("ALERT: Temperature is " + celcius + " celcius.");
+        return 500;
+    }
+}
+
+class RealNetworkAlert implements NetworkAlertFunc {
+    public int alert(float celcius) {
+        System.out.println("Sending real alert for temperature: " + celcius + " celcius.");
+        return (celcius > 200.0) ? 500 : 200;
+    }
+}
+
+class NetworkAlertMock implements NetworkAlertFunc {
+    static float  receivedCelsius ;
+    public int alert(float celcius) {
+        receivedCelsius = celcius;
+        return 500;
     }
 }
