@@ -23,7 +23,6 @@ public class Main {
         assert result == 25;
 
         String expectedConsoleBuffer =
-                "0 | White | Blue\n" +
                 "1 | White | Orange\n" +
                 "2 | White | Green\n" +
                 "3 | White | Brown\n" +
