@@ -1,27 +1,31 @@
-public class Alerter {
-    static int alertFailureCount = 0;
-    static int networkAlertStub(float celcius) {
-        System.out.println("ALERT: Temperature is " + celcius + " celcius");
-        // Return 200 for ok
-        // Return 500 for not-ok
-        // stub always succeeds and returns 200
-        return 200;
+public class AlertSystem {
+    int alertFailureCount;
+    NetworkAlertFunc networkAlertFunc;
+
+    public AlertSystem(int alertFailureCount, NetworkAlertFunc networkAlertFunc) {
+        this.alertFailureCount = alertFailureCount;
+        this.networkAlertFunc = networkAlertFunc;
     }
-    static void alertInCelcius(float farenheit) {
-        float celcius = (farenheit - 32) * 5 / 9;
-        int returnCode = networkAlertStub(celcius);
+
+    public void alertInCelcius(float fahrenheit) {
+        float celcius = (fahrenheit - 32) * 5 / 9;
+        int returnCode = networkAlertFunc.alert(celcius);
         if (returnCode != 200) {
-            // non-ok response is not an error! Issues happen in life!
-            // let us keep a count of failures to report
-            // However, this code doesn't count failures!
-            // Add a test below to catch this bug. Alter the stub above, if needed.
-            alertFailureCount += 0;
+            alertFailureCount++;
         }
     }
+
     public static void main(String[] args) {
-        alertInCelcius(400.5f);
-        alertInCelcius(303.6f);
-        System.out.printf("%d alerts failed.\n", alertFailureCount);
-        System.out.println("All is well (maybe!)\n");
+      //mockalert
+        AlertSystem testSystem = new AlertSystem(0, new NetworkAlertMock());
+        testSystem.alertInCelcius(303.6f);
+        
+        assert(NetworkAlertMock.receivedCelsius==0.0f);
+        assert(testSystem.alertFailureCount==2);
+        //with Real network alert
+        testSystem.networkAlertFunc =  new RealNetworkAlert();
+        testSystem.alertInCelcius(500.0f);
+        testSystem.alertInCelcius(178.0f);
+        assert(testSystem.alertFailureCount==3);
     }
 }
