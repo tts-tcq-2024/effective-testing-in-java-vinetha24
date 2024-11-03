@@ -1,4 +1,4 @@
-public class Main {
+public class Misaligned {
     static String actualManual = "";
 
     public static void printOnConsole(String manualItem) {
@@ -19,7 +19,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int result = printColorMap(Main::mockPrintOnConsole);
+        int result = printColorMap(Misaligned::mockPrintOnConsole);
         assert result == 25;
 
         String expectedConsoleBuffer =
